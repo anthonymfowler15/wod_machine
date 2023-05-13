@@ -1,0 +1,32 @@
+services:
+  # db:
+  #   image: postgres:14
+  #   environment:
+  #     POSTGRES_USER: mydbuser
+  #     POSTGRES_PASSWORD: mypassword
+  #     POSTGRES_DB: myapp_development
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
+
+  web:
+    build: .
+    command: ["rails", "server", "-b", "0.0.0.0"]
+    # command: ["tail", "-f", "/dev/null"]
+    volumes:
+      - .:/app
+      - bundle_cache:/usr/local/bundle
+    ports:
+      - "3000:3000"
+    # depends_on:
+    #   - db
+    environment:
+      DATABASE: postgres
+      DB_USERNAME: mydbuser
+      DB_PASSWORD: mypassword
+      DB_HOST: db
+      DB_PORT: 5432
+      RAILS_ENV: development
+
+volumes:
+  pgdata:
+  bundle_cache:
