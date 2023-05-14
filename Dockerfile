@@ -6,10 +6,11 @@ RUN apk add --update --no-cache \
     nodejs \
     yarn \
     tzdata \
-    bash
+    bash \
+    npm
 WORKDIR /app
-COPY Gemfile* .
-RUN bundle install -j4 --retry 3
 COPY . .
+RUN bundle install -j4 --retry 3
+RUN npm install
 EXPOSE 3000
-CMD ["rails", "server", "-b", "0.0.0.0"]
+# CMD ["rails", "server", "-b", "0.0.0.0"]
